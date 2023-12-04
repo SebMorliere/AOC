@@ -4,7 +4,8 @@
   "scripts": {
     "run_01-1": "ts-node ./day_01/puzzle1.ts",
     "run_01-2": "ts-node ./day_01/puzzle2.ts",
-    "run_02-1": "ts-node ./day_02/puzzle1.ts"
+    "run_02-1": "ts-node ./day_02/puzzle1.ts",
+    "run_02-2": "ts-node ./day_02/puzzle2.ts"
   },
   "volta": {
     "node": "16.16.0"

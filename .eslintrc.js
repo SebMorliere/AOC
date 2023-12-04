@@ -20,6 +20,7 @@ module.exports = {
     "rules": {
         semi: "warn",
         quotes: "warn",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "prefer-const": "warn"
     }
 };

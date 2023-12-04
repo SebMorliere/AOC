@@ -2,7 +2,10 @@ import * as fs from "fs";
 import { initPuzzle } from "../shared/utils";
 import { Game } from "./game";
 
-initPuzzle(2, 1);
+const DAY = 2;
+const PART = 2;
+initPuzzle(DAY, PART);
+
 const testFile1 = "./day_02/test1.data";
 const inputFile1 = "./day_02/input1.data";
 
@@ -24,13 +27,12 @@ function solver(fileName: string) {
     });
 
     readStream.on("end", () => {
-        const res = games.gameSet.filter(game => game.isValid)
-            .map(game => game.id)
+        const res = games.gameSet
+            .map(game => game.power)
             .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-        console.log(`puzzle 1 answer (${fileName}): `, res);
+        console.log(`Day ${DAY} puzzle ${PART}> answer (with ${fileName}): `, res);
     });
 }
 
 solver(testFile1);
 solver(inputFile1);
-// 2335 is too high
