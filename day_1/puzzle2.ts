@@ -3,8 +3,8 @@ import { initPuzzle } from "../shared/utils";
 
 initPuzzle(1, 2);
 
-// const dataFileName = "./day_01/test2.data";
-const dataFileName = "./day_01/input2.data";
+// const dataFileName = "./day_1/test2.data";
+const dataFileName = "./day_1/input2.data";
 console.log("data file name:", dataFileName);
 let finalRes: number = 0;
 

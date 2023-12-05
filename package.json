@@ -2,13 +2,17 @@
   "name": "Advent Of Code",
   "version": "1.0.0",
   "scripts": {
-    "run_01-1": "ts-node ./day_01/puzzle1.ts",
-    "run_01-2": "ts-node ./day_01/puzzle2.ts",
-    "run_02-1": "ts-node ./day_02/puzzle1.ts",
-    "run_02-2": "ts-node ./day_02/puzzle2.ts"
+    "run_01-1": "ts-node ./day_1/puzzle1.ts",
+    "run_01-2": "ts-node ./day_1/puzzle2.ts",
+    "run_02-1": "ts-node ./day_2/puzzle1.ts",
+    "run_02-2": "ts-node ./day_2/puzzle2.ts",
+    "run_03-1": "ts-node ./day_3/puzzle1.ts"
   },
   "volta": {
     "node": "16.16.0"
+  },
+  "dependencies": {
+    "rxjs": "~7.8.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "~6.13.1",

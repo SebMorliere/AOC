@@ -2,12 +2,9 @@ import * as fs from "fs";
 import { initPuzzle } from "../shared/utils";
 import { Game } from "./game";
 
-const DAY = 2;
-const PART = 2;
-initPuzzle(DAY, PART);
-
-const testFile1 = "./day_02/test1.data";
-const inputFile1 = "./day_02/input1.data";
+initPuzzle(2, 1);
+const testFile1 = "./day_2/test1.data";
+const inputFile1 = "./day_2/input1.data";
 
 function solver(fileName: string) {
     const readStream: fs.ReadStream = fs.createReadStream(fileName, {encoding: "utf-8", autoClose: true});
@@ -27,12 +24,13 @@ function solver(fileName: string) {
     });
 
     readStream.on("end", () => {
-        const res = games.gameSet
-            .map(game => game.power)
+        const res = games.gameSet.filter(game => game.isValid)
+            .map(game => game.id)
             .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-        console.log(`Day ${DAY} puzzle ${PART}> answer (with ${fileName}): `, res);
+        console.log(`puzzle 1 answer (${fileName}): `, res);
     });
 }
 
 solver(testFile1);
 solver(inputFile1);
+// 2335 is too high
