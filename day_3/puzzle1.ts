@@ -29,10 +29,8 @@ class Solver extends GenericSolver {
                     cellBuffer.push(cell);
                 } else {
                     if (cellBuffer.length > 0) {
-                        const surroundingCells = cellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords));
-                        const isValidPartNumber = surroundingCells
+                        const isValidPartNumber = cellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords))
                             .some(cell => cell.type === CellType.SYMBOL.valueOf());
-                        const map = surroundingCells.filter(cell => cell.type !== CellType.NUMBER).map(cell => cell.value).join("");
                         if (isValidPartNumber) {
                             listOfValidPartNumber.push(+cellBuffer.map(cell => cell.value).join(""));
                         }
@@ -41,12 +39,11 @@ class Solver extends GenericSolver {
                 }
             }
         }
-        const test1 = listOfValidPartNumber.some(value => isNaN(value));
         this.res = listOfValidPartNumber.reduce((previousValue, currentValue) => previousValue + currentValue);
     }
 }
 
-// new Solver(DAY, PART, testFile).solve(); // expecting 4361
+new Solver(DAY, PART, testFile).solve(); // expecting 4361
 new Solver(DAY, PART, inputFile).solve();
 // tested 538293 but too low
 
