@@ -1,7 +1,7 @@
 import { Coords } from "./coords";
 
 export class Matrix<T> {
-    private readonly cells: T[][] = [[]];
+    readonly cells: T[][] = [[]];
     private height: number = 0;
     private width: number = 0;
 

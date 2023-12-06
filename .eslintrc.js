@@ -18,8 +18,8 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        semi: "warn",
-        quotes: "warn",
+        "semi": "warn",
+        "quotes": "warn",
         "no-unused-vars": "warn",
         "prefer-const": "warn"
     }
