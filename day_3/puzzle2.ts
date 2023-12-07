@@ -1,7 +1,7 @@
 import { Matrix } from "./models/matrix";
 import { Cell, CellType } from "./models/cell";
 import { GenericSolver } from "../shared/generic-solver";
-import { ColoredLogger, FgColor, Tinter } from "../shared/colored-logger";
+import { BgColor, ColoredLogger, FgColor, Tinter } from "../shared/colored-logger";
 
 const DAY = 3;
 const PART = 1;
@@ -22,7 +22,6 @@ class Solver extends GenericSolver {
     }
 
     protected resultProcessor(): void {
-        const listOfValidPartNumber: number[] = [];
         for (let y = 0; y < this.matrix.getHeight(); y++) {
             let cellBuffer: Cell[] = [];
             for (let x = 0; x < this.matrix.getWidth(); x++) {
@@ -31,11 +30,23 @@ class Solver extends GenericSolver {
                     cellBuffer.push(cell);
                 }
                 if (cellBuffer.length > 0 && (cell.type !== CellType.NUMBER || x + 1 === this.matrix.getWidth())) {
-                    const isValidPartNumber = cellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords))
-                        .some(cell => cell.type === CellType.SYMBOL || cell.type === CellType.GEAR);
+                    const gearList = cellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords))
+                        .filter(cell => cell.type === CellType.GEAR)
+                        .filter((n, i, arr) => arr.indexOf(n) === i);
+                    gearList.forEach(cell => {
+                        cell.charColor = { fgColor: FgColor.YELLOW };
+                    });
+                    const isValidPartNumber = gearList.length > 0;
+
                     if (isValidPartNumber) {
-                        cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.GREEN });
-                        listOfValidPartNumber.push(+cellBuffer.map(cell => cell.value).join(""));
+                        cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.YELLOW });
+                        const partNumber = +cellBuffer.map(cell => cell.value).join("");
+                        gearList.forEach(cell => {
+                            cell.adjacentPartNumberList.push(partNumber);
+                            if (cell.adjacentPartNumberList.length > 1) {
+                                cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.GREEN });
+                            }
+                        });
                     } else {
                         cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.RED });
                     }
@@ -43,8 +54,17 @@ class Solver extends GenericSolver {
                 }
             }
         }
+        this.res = this.matrix.cells.flatMap(cells => cells)
+            .map(cell => {
+                if (cell.type === CellType.GEAR && cell.adjacentPartNumberList.length === 2) {
+                    cell.charColor = { fgColor: FgColor.GREEN };
+                    return cell.adjacentPartNumberList.reduce((previousValue, currentValue) => previousValue * currentValue);
+                } else {
+                    return 0;
+                }
+            })
+            .reduce((previousValue, currentValue) => previousValue + currentValue);
         // this.displayMatrix();
-        this.res = listOfValidPartNumber.reduce((previousValue, currentValue) => previousValue + currentValue);
     }
 
     private displayMatrix() {
@@ -54,5 +74,5 @@ class Solver extends GenericSolver {
     }
 }
 
-new Solver(DAY, PART, testFile).solve(); // expecting 4361
-new Solver(DAY, PART, inputFile).solve(); // accepted res 540131
+new Solver(DAY, PART, testFile).solve(); // expecting 467835
+new Solver(DAY, PART, inputFile).solve(); // test 86879020

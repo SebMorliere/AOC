@@ -6,33 +6,33 @@ export class Cell {
     readonly type: CellType;
     readonly value: string;
     charColor: CharColor = {};
+    adjacentPartNumberList: number[] = [];
 
     constructor(x: number, y: number, value: string) {
         this.coords = new Coords(x, y);
         this.value = value;
-        if (isSymbol(this.value)) {
-            this.type = CellType.SYMBOL;
-            this.charColor = { fgColor: FgColor.BLACK, bgColor: BgColor.BRIGHT_YELLOW };
-        } else if (isNumber(this.value)) {
-            this.type = CellType.NUMBER;
-        } else {
-            this.type = CellType.EMPTY;
+        this.type = getCellType(value);
+        if (this.type === CellType.EMPTY) {
             this.charColor = {fgColor: FgColor.GRAY};
         }
     }
 }
 
 export enum CellType {
+    GEAR = "GEAR",
     SYMBOL = "SYMBOL",
     NUMBER = "NUMBER",
     EMPTY = "EMPTY"
 }
 
-// regex: [^0-9.]
-export function isSymbol(char: string): boolean {
-    return char.length === 1 && isNaN(+char) && char !== ".";
-}
-
-export function isNumber(char: string): boolean {
-    return char.length === 1 && !isNaN(+char);
+export function getCellType(cellValue: string): CellType {
+    if (cellValue.length === 1 && isNaN(+cellValue) && cellValue === "*") {
+        return CellType.GEAR;
+    } else if(cellValue.length === 1 && isNaN(+cellValue) && cellValue !== ".") {
+        return CellType.SYMBOL;
+    } else if (cellValue.length === 1 && !isNaN(+cellValue)) {
+        return CellType.NUMBER;
+    } else {
+        return CellType.EMPTY;
+    }
 }
