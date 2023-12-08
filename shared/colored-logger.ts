@@ -16,23 +16,29 @@ export class ColoredLogger {
     }
 }
 
-export class Tinter {
-    static tint(input: string | number, charColor: CharColor): string {
-        const tints: string[] = [];
-        const tintsReset: string[] = [];
-        if (charColor.fgColor) {
-            tints.push(charColor.fgColor);
-            tintsReset.push(FgColor.RESET);
-        }
-        if (charColor.bgColor) {
-            tints.push(charColor.bgColor);
-            tintsReset.push(BgColor.RESET);
-        }
-        const tint: string = tints.length > 0 ? `\x1b[${tints.join(";")}m` : "";
-        const unTint: string = tintsReset.length > 0 ? `\x1b[${tintsReset.join(";")}m` : "";
+export function tintFg(input: string | number, fgColor: FgColor): string {
+    return tint(input, { fgColor })
+}
 
-        return tint + input + unTint;
+export function tintBg(input: string | number, bgColor: BgColor): string {
+    return tint(input, { bgColor });
+}
+
+export function tint(input: string | number, charColor: CharColor): string {
+    const tints: string[] = [];
+    const tintsReset: string[] = [];
+    if (charColor.fgColor) {
+        tints.push(charColor.fgColor);
+        tintsReset.push(FgColor.RESET);
     }
+    if (charColor.bgColor) {
+        tints.push(charColor.bgColor);
+        tintsReset.push(BgColor.RESET);
+    }
+    const tint: string = tints.length > 0 ? `\x1b[${tints.join(";")}m` : "";
+    const unTint: string = tintsReset.length > 0 ? `\x1b[${tintsReset.join(";")}m` : "";
+
+    return tint + input + unTint;
 }
 
 export interface CharColor {

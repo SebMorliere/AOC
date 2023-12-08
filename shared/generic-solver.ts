@@ -1,5 +1,6 @@
 import { Subscription, filter, map } from "rxjs";
 import { initPuzzle, reader } from "./utils";
+import { ColoredLogger } from "./colored-logger";
 
 export class GenericSolver {
     private readonly subscriptions: Subscription[] = [];
@@ -7,6 +8,7 @@ export class GenericSolver {
     protected readonly DAY;
     protected readonly PART;
     protected res: string | number = "";
+    protected logger: ColoredLogger = new ColoredLogger();
 
     constructor(day: number, part: number, fileName: string) {
         initPuzzle(day, part);

@@ -1,7 +1,7 @@
 import { Matrix } from "./models/matrix";
 import { Cell, CellType } from "./models/cell";
 import { GenericSolver } from "../shared/generic-solver";
-import { ColoredLogger, FgColor, Tinter } from "../shared/colored-logger";
+import { ColoredLogger, FgColor, tint } from "../shared/colored-logger";
 
 const DAY = 3;
 const PART = 1;
@@ -49,7 +49,7 @@ class Solver extends GenericSolver {
 
     private displayMatrix() {
         this.matrix.cells
-            .map(cells => cells.map(cell => Tinter.tint(cell.value, cell.charColor)).join(""))
+            .map(cells => cells.map(cell => tint(cell.value, cell.charColor)).join(""))
             .forEach(line => this.coloredLogger.logTinted(line));
     }
 }
