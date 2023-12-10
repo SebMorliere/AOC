@@ -8,7 +8,8 @@
     "run_02-2": "ts-node ./day_2/puzzle2.ts",
     "run_03-1": "ts-node ./day_3/puzzle1.ts",
     "run_03-2": "ts-node ./day_3/puzzle2.ts",
-    "run_03-2": "ts-node ./day_4/puzzle1.ts"
+    "run_04-1": "ts-node ./day_4/puzzle1.ts",
+    "run_04-2": "ts-node ./day_4/puzzle2.ts"
   },
   "volta": {
     "node": "16.16.0"

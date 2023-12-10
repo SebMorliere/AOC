@@ -30,7 +30,7 @@ export class GenericSolver {
                 },
                 complete: () => {
                     this.resultProcessor();
-                    this.resultDisplayer();
+                    this.resultPrinter();
                     this.clearSubs();
                 }
             })
@@ -43,7 +43,7 @@ export class GenericSolver {
     protected resultProcessor(): void {
     }
 
-    protected resultDisplayer() {
+    protected resultPrinter() {
         console.log(`Day ${this.DAY} puzzle ${this.PART}> answer (with ${this.fileName}): `, this.res);
     }
 
