@@ -2,19 +2,19 @@
   "name": "Advent Of Code - 2023",
   "version": "1.0.0",
   "scripts": {
-    "run_01-1": "ts-node ./day_1/puzzle1.ts",
-    "run_01-2": "ts-node ./day_1/puzzle2.ts",
-    "run_02-1": "ts-node ./day_2/puzzle1.ts",
-    "run_02-2": "ts-node ./day_2/puzzle2.ts",
-    "run_03-1": "ts-node ./day_3/puzzle1.ts",
-    "run_03-2": "ts-node ./day_3/puzzle2.ts",
-    "run_04-1": "ts-node ./day_4/puzzle1.ts",
-    "run_04-2": "ts-node ./day_4/puzzle2.ts",
-    "run_05-1": "ts-node ./day_5/puzzle1.ts",
-    "run_05-2": "ts-node ./day_5/puzzle2.ts"
+    "day_01-1": "ts-node ./day_1/puzzle1.ts",
+    "day_01-2": "ts-node ./day_1/puzzle2.ts",
+    "day_02-1": "ts-node ./day_2/puzzle1.ts",
+    "day_02-2": "ts-node ./day_2/puzzle2.ts",
+    "day_03-1": "ts-node ./day_3/puzzle1.ts",
+    "day_03-2": "ts-node ./day_3/puzzle2.ts",
+    "day_04-1": "ts-node ./day_4/puzzle1.ts",
+    "day_04-2": "ts-node ./day_4/puzzle2.ts",
+    "day_05-1": "ts-node ./day_5/puzzle1.ts",
+    "day_05-2": "ts-node ./day_5/puzzle2.ts"
   },
   "volta": {
-    "node": "16.16.0"
+    "node": "16.20.2"
   },
   "dependencies": {
     "rxjs": "~7.8.1"
