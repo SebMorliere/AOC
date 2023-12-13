@@ -1,9 +1,10 @@
 import { GenericSolver } from "../shared/generic-solver";
 
 const DAY = 4;
-const PART = 1;
-const testFile = `./day_${DAY}/test${PART}.data`;
-const inputFile = `./day_${DAY}/input${PART}.data`;
+const PART = 2;
+const DATA = 1;
+const testFile = `./day_${DAY}/test${DATA}.data`;
+const inputFile = `./day_${DAY}/input${DATA}.data`;
 
 class Solver extends GenericSolver {
     readonly scratchcards: Scratchcard[] = [];

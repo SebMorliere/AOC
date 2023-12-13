@@ -4,9 +4,10 @@ import { GenericSolver } from "../shared/generic-solver";
 import { ColoredLogger, FgColor, tint } from "../shared/colored-logger";
 
 const DAY = 3;
-const PART = 1;
-const testFile = `./day_${DAY}/test${PART}.data`;
-const inputFile = `./day_${DAY}/input${PART}.data`;
+const PART = 2;
+const DATA = 1;
+const testFile = `./day_${DAY}/test${DATA}.data`;
+const inputFile = `./day_${DAY}/input${DATA}.data`;
 
 class Solver extends GenericSolver {
     private readonly matrix: Matrix<Cell> = new Matrix<Cell>();

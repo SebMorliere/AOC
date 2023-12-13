@@ -1,5 +1,5 @@
 {
-  "name": "Advent Of Code",
+  "name": "Advent Of Code - 2023",
   "version": "1.0.0",
   "scripts": {
     "run_01-1": "ts-node ./day_1/puzzle1.ts",
@@ -10,7 +10,8 @@
     "run_03-2": "ts-node ./day_3/puzzle2.ts",
     "run_04-1": "ts-node ./day_4/puzzle1.ts",
     "run_04-2": "ts-node ./day_4/puzzle2.ts",
-    "run_05-1": "ts-node ./day_5/puzzle1.ts"
+    "run_05-1": "ts-node ./day_5/puzzle1.ts",
+    "run_05-2": "ts-node ./day_5/puzzle2.ts"
   },
   "volta": {
     "node": "16.16.0"

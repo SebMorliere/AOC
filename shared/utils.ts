@@ -3,7 +3,7 @@ import * as readline from "readline";
 import { Observable, Subscriber } from "rxjs";
 
 export function initPuzzle(day: number, part: number) {
-    console.log(`start puzzle ${part} - day ${day}`);
+    console.log(`start solving D${day}-P${part}`);
 }
 
 
