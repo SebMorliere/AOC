@@ -1,9 +1,10 @@
 import { GenericSolver } from "../shared/generic-solver";
 
-const DAY = 6;
-const PART = 1;
-const testFile = `./day_${DAY}/test${PART}.data`;
-const inputFile = `./day_${DAY}/input${PART}.data`;
+const DAY = 6,
+    PART = 2,
+    DATA = 1;
+const testFile = `./day_${DAY}/test${DATA}.data`,
+    inputFile = `./day_${DAY}/input${DATA}.data`;
 
 class Solver extends GenericSolver {
     timeArr: number[] = [];
@@ -14,16 +15,12 @@ class Solver extends GenericSolver {
         const DISTANCE: string = "Distance:";
 
         if (line.startsWith(TIME)) {
-            this.timeArr.push(...line.replace(TIME, "")
-                .split(" ")
-                .filter(s => s !== "")
-                .map(s => +s.trim()));
+            this.timeArr.push(+line.replace(TIME, "")
+                .replaceAll(" ", ""));
 
         } else if (line.startsWith(DISTANCE)) {
-            this.distanceArr.push(...line.replace(DISTANCE, "")
-                .split(" ")
-                .filter(s => s !== "")
-                .map(s => +s.trim()));
+            this.distanceArr.push(+line.replace(DISTANCE, "")
+                .replaceAll(" ", ""));
         }
     }
 
@@ -49,5 +46,5 @@ class Solver extends GenericSolver {
 
 }
 
-new Solver(DAY, PART, testFile).solve(); // expecting 288
-new Solver(DAY, PART, inputFile).solve(); // good 1083852
+new Solver(DAY, PART, testFile).solve(); // expecting 71503
+new Solver(DAY, PART, inputFile).solve(); // good 23501589
