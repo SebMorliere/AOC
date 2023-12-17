@@ -7,7 +7,7 @@ export function initPuzzle(day: number, part: number) {
 }
 
 
-export function reader(fileName: string): Observable<string> {
+export function fileReader(fileName: string): Observable<string> {
     const stream: fs.ReadStream = fs.createReadStream(fileName, { encoding: "utf-8", autoClose: true });
     const lineReaderEmitter: readline.Interface = readline.createInterface({
         input: stream,
@@ -21,3 +21,6 @@ export function reader(fileName: string): Observable<string> {
     });
 }
 
+export function sum(previousValue: number, currentValue: number): number {
+    return previousValue + currentValue;
+}

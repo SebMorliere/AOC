@@ -1,4 +1,5 @@
 import { GenericSolver } from "../shared/generic-solver";
+import { sum } from "../shared/utils";
 
 const DAY = 4;
 const PART = 1;
@@ -18,7 +19,7 @@ class Solver extends GenericSolver {
     }
 
     protected resultProcessor(): void {
-        this.res = this.points.reduce((previousValue, currentValue) => previousValue + currentValue);
+        this.res = this.points.reduce(sum);
     }
 }
 

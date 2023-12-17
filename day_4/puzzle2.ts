@@ -1,4 +1,5 @@
 import { GenericSolver } from "../shared/generic-solver";
+import { sum } from "../shared/utils";
 
 const DAY = 4;
 const PART = 2;
@@ -36,7 +37,7 @@ class Solver extends GenericSolver {
         });
         this.res = this.scratchcards
             .map(sc => sc.instances)
-            .reduce((previousValue, currentValue) => previousValue + currentValue);
+            .reduce(sum);
     }
 }
 

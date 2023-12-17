@@ -2,6 +2,7 @@ import { Matrix } from "./models/matrix";
 import { Cell, CellType } from "./models/cell";
 import { GenericSolver } from "../shared/generic-solver";
 import { ColoredLogger, FgColor, tint } from "../shared/colored-logger";
+import { sum } from "../shared/utils";
 
 const DAY = 3;
 const PART = 1;
@@ -44,7 +45,7 @@ class Solver extends GenericSolver {
             }
         }
         // this.displayMatrix();
-        this.res = listOfValidPartNumber.reduce((previousValue, currentValue) => previousValue + currentValue);
+        this.res = listOfValidPartNumber.reduce(sum);
     }
 
     private displayMatrix() {

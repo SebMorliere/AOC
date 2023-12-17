@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { initPuzzle } from "../shared/utils";
+import { initPuzzle, sum } from "../shared/utils";
 import { Game } from "./game";
 
 const DAY = 2;
@@ -29,7 +29,7 @@ function solver(fileName: string) {
     readStream.on("end", () => {
         const res = games.gameSet
             .map(game => game.power)
-            .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+            .reduce(sum, 0);
         console.log(`Day ${DAY} puzzle ${PART}> answer (with ${fileName}): `, res);
     });
 }

@@ -1,5 +1,5 @@
 import { filter, map, Subscription } from "rxjs";
-import { initPuzzle, reader } from "./utils";
+import { initPuzzle, fileReader } from "./utils";
 import { ColoredLogger, FgColor, tint } from "./colored-logger";
 
 export abstract class GenericSolver {
@@ -21,7 +21,7 @@ export abstract class GenericSolver {
     }
 
     public solve(): void {
-        const lines = reader(this.fileName);
+        const lines = fileReader(this.fileName);
         this.subscriptions.push(
             lines.pipe(
                 map(line => line.trim()),

@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { initPuzzle } from "../shared/utils";
+import { initPuzzle, sum } from "../shared/utils";
 import { Game } from "./game";
 
 initPuzzle(2, 1);
@@ -26,7 +26,7 @@ function solver(fileName: string) {
     readStream.on("end", () => {
         const res = games.gameSet.filter(game => game.isValid)
             .map(game => game.id)
-            .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+            .reduce(sum, 0);
         console.log(`puzzle 1 answer (${fileName}): `, res);
     });
 }
