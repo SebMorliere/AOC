@@ -1,4 +1,4 @@
-import { FgColor, tintFg } from "../shared/colored-logger";
+import { BgColor, ColoredLogger, FgColor, tintBg, tintFg } from "../shared/colored-logger";
 
 export type CardLabel = "A" | "K" | "Q" | "J" | "T" |
     "9" | "8" | "7" | "6" | "5" | "4" | "3" | "2";
@@ -9,12 +9,12 @@ export interface Card {
 }
 
 export type HandType = "Five of a kind" | // AAAAA 1l X 5
-    "Four of a kind" |                    // KKKKI 2l X 4+1
+    "Four of a kind" |                    // KKKKI 2l X 4      +1
     "Full house" |                        // 999QQ 2l X 3+2
-    "Three of a kind" |                   // TTT64 3l X 3+1+1
-    "Two pair" |                          // 7733J 3l X 2+2+1
-    "One pair" |                          // 22AKQ 4l X
-    "High card";                          // AKQJT 5l X
+    "Three of a kind" |                   // TTT64 3l X 3    +1+1
+    "Two pair" |                          // 7733J 3l X 2+2    +1
+    "One pair" |                          // 22AKQ 4l X 2  +1+1+1
+    "High card";                          // AKQJT 5l X 1+1+1+1+1
 
 export interface Rank {
     type: HandType;
@@ -27,25 +27,50 @@ export interface Hand {
     bid: number;
 }
 
-export class CardUtil {
-    private static readonly ALL_CARDS: Map<string, Card> = new Map([
-        ["2", {order: 2, label: "2"}],
-        ["3", {order: 3, label: "3"}],
-        ["4", {order: 4, label: "4"}],
-        ["5", {order: 5, label: "5"}],
-        ["6", {order: 6, label: "6"}],
-        ["7", {order: 7, label: "7"}],
-        ["8", {order: 8, label: "8"}],
-        ["9", {order: 9, label: "9"}],
-        ["T", {order: 10, label: "T"}],
-        ["J", {order: 11, label: "J"}],
-        ["Q", {order: 12, label: "Q"}],
-        ["K", {order: 13, label: "K"}],
-        ["A", {order: 14, label: "A"}]
-    ]);
+export const ALL_CARDS: Map<string, Card> = new Map([
+    ["2", {order: 2, label: "2"}],
+    ["3", {order: 3, label: "3"}],
+    ["4", {order: 4, label: "4"}],
+    ["5", {order: 5, label: "5"}],
+    ["6", {order: 6, label: "6"}],
+    ["7", {order: 7, label: "7"}],
+    ["8", {order: 8, label: "8"}],
+    ["9", {order: 9, label: "9"}],
+    ["T", {order: 10, label: "T"}],
+    ["J", {order: 11, label: "J"}],
+    ["Q", {order: 12, label: "Q"}],
+    ["K", {order: 13, label: "K"}],
+    ["A", {order: 14, label: "A"}]
+]);
 
+export const ALL_CARDS_WITH_JOKERS: Map<string, Card> = new Map([
+    ["J", {order: 1, label: "J"}],
+    ["2", {order: 2, label: "2"}],
+    ["3", {order: 3, label: "3"}],
+    ["4", {order: 4, label: "4"}],
+    ["5", {order: 5, label: "5"}],
+    ["6", {order: 6, label: "6"}],
+    ["7", {order: 7, label: "7"}],
+    ["8", {order: 8, label: "8"}],
+    ["9", {order: 9, label: "9"}],
+    ["T", {order: 10, label: "T"}],
+    ["Q", {order: 12, label: "Q"}],
+    ["K", {order: 13, label: "K"}],
+    ["A", {order: 14, label: "A"}]
+]);
+
+export class CardUtil {
     public static process(label: string): Card {
-        const card: Card | undefined = this.ALL_CARDS.get(label);
+        const card: Card | undefined = ALL_CARDS.get(label);
+        if (card !== undefined) {
+            return card;
+        } else {
+            throw Error("invalid card label");
+        }
+    }
+
+    public static processWithJokers(label: string): Card {
+        const card: Card | undefined = ALL_CARDS_WITH_JOKERS.get(label);
         if (card !== undefined) {
             return card;
         } else {
@@ -99,6 +124,61 @@ export class HandUtil {
         }
     }
 
+
+// AAAAA 1l X 5
+// KKKKI 2l X 41
+// 999QQ 2l X 32
+// TTT64 3l X 311
+// 7733J 3l X 221
+// 22AKQ 4l X 2111
+// AKQJT 5l X 11111
+
+    public static processWithJoker(cards: Card[], jokerLabelTested?: Card[]): Rank {
+        const uniqueLabels: Set<CardLabel> = new Set(cards.map(c => c.label));
+        const filteredOccurrenceArr: number[] = [];
+        uniqueLabels.forEach(cardLabel => {
+            if (cardLabel !== "J") {
+                filteredOccurrenceArr.push(cards.filter(card => card.label === cardLabel).length);
+            }
+        });
+        let jOccurrence: number = cards.filter(card => card.label === "J").length;
+        filteredOccurrenceArr.sort((a, b) => b - a);
+        if (jOccurrence === 0) {
+            return this.process(cards);
+        } else {
+            while (jOccurrence > 0) {
+                const indexToIncrement: number = filteredOccurrenceArr.findIndex(nbOccurrence => nbOccurrence < 5);
+                filteredOccurrenceArr[indexToIncrement] = ++filteredOccurrenceArr[indexToIncrement];
+                jOccurrence--;
+            }
+            const occurrencePattern = filteredOccurrenceArr.join("");
+            switch (occurrencePattern) {
+                case "5": {
+                    return this.getRankOrFuckOff("Five of a kind");
+                }
+                case "41": {
+                    return  this.getRankOrFuckOff("Four of a kind");
+                }
+                case "32": {
+                    return  this.getRankOrFuckOff("Full house");
+                }
+                case "311": {
+                    return  this.getRankOrFuckOff("Three of a kind");
+                }
+                case "221": {
+                    return  this.getRankOrFuckOff("Two pair");
+                }
+                case "2111": {
+                    return this.getRankOrFuckOff("One pair");
+                }
+                default: {
+                    return this.getRankOrFuckOff("High card");
+                }
+            }
+
+        }
+    }
+
     private static getRankOrFuckOff(handType: HandType): Rank {
         const rank: Rank | undefined = this.ALL_RANKS_MAP.get(handType);
         if (rank === undefined) {
@@ -123,6 +203,16 @@ export function SortHand(left: Hand, right: Hand): number {
         return 0;
     }
 }
+
+export function SortCard(left: Card, right: Card): number {
+    const sortByOrder: number = left.order - right.order;
+    if (sortByOrder !== 0) {
+        return sortByOrder;
+    } else {
+        return 0;
+    }
+}
+
 
 export function rankTinter(rank: Rank): string {
     const output = rank.type.padStart(15, " ");
@@ -150,4 +240,14 @@ export function rankTinter(rank: Rank): string {
         }
 
     }
+}
+
+export function handLogger(hand: Hand, index: number) {
+    const rank: string = tintFg((index + 1 + "").padStart(4, " "), FgColor.GRAY);
+    const bid: string = tintFg(hand.bid.toString().padStart(3, " "), FgColor.GRAY);
+    const labels: string = hand.cards.map(c => tintFg(c.label, c.label === "J" ? FgColor.BRIGHT_MAGENTA : FgColor.BLUE)).join("");
+    const type: string = rankTinter(hand.rank);
+    const value: string = tintBg(">>> " + (hand.bid * (index + 1)).toString().padStart(6, " "), BgColor.GRAY);
+    const message: string = `${rank} ${tintFg("*", FgColor.GRAY)} ${bid} ${value}  ${labels} ${type}`;
+    new ColoredLogger().logTinted(message);
 }

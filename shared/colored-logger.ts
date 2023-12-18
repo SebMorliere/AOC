@@ -17,7 +17,7 @@ export class ColoredLogger {
 }
 
 export function tintFg(input: string | number, fgColor: FgColor): string {
-    return tint(input, { fgColor })
+    return tint(input, { fgColor });
 }
 
 export function tintBg(input: string | number, bgColor: BgColor): string {
