@@ -28,35 +28,35 @@ export interface Hand {
 }
 
 export const ALL_CARDS: Map<string, Card> = new Map([
-    ["2", {order: 2, label: "2"}],
-    ["3", {order: 3, label: "3"}],
-    ["4", {order: 4, label: "4"}],
-    ["5", {order: 5, label: "5"}],
-    ["6", {order: 6, label: "6"}],
-    ["7", {order: 7, label: "7"}],
-    ["8", {order: 8, label: "8"}],
-    ["9", {order: 9, label: "9"}],
-    ["T", {order: 10, label: "T"}],
-    ["J", {order: 11, label: "J"}],
-    ["Q", {order: 12, label: "Q"}],
-    ["K", {order: 13, label: "K"}],
-    ["A", {order: 14, label: "A"}]
+    ["2", { order: 2, label: "2" }],
+    ["3", { order: 3, label: "3" }],
+    ["4", { order: 4, label: "4" }],
+    ["5", { order: 5, label: "5" }],
+    ["6", { order: 6, label: "6" }],
+    ["7", { order: 7, label: "7" }],
+    ["8", { order: 8, label: "8" }],
+    ["9", { order: 9, label: "9" }],
+    ["T", { order: 10, label: "T" }],
+    ["J", { order: 11, label: "J" }],
+    ["Q", { order: 12, label: "Q" }],
+    ["K", { order: 13, label: "K" }],
+    ["A", { order: 14, label: "A" }]
 ]);
 
 export const ALL_CARDS_WITH_JOKERS: Map<string, Card> = new Map([
-    ["J", {order: 1, label: "J"}],
-    ["2", {order: 2, label: "2"}],
-    ["3", {order: 3, label: "3"}],
-    ["4", {order: 4, label: "4"}],
-    ["5", {order: 5, label: "5"}],
-    ["6", {order: 6, label: "6"}],
-    ["7", {order: 7, label: "7"}],
-    ["8", {order: 8, label: "8"}],
-    ["9", {order: 9, label: "9"}],
-    ["T", {order: 10, label: "T"}],
-    ["Q", {order: 12, label: "Q"}],
-    ["K", {order: 13, label: "K"}],
-    ["A", {order: 14, label: "A"}]
+    ["J", { order: 1, label: "J" }],
+    ["2", { order: 2, label: "2" }],
+    ["3", { order: 3, label: "3" }],
+    ["4", { order: 4, label: "4" }],
+    ["5", { order: 5, label: "5" }],
+    ["6", { order: 6, label: "6" }],
+    ["7", { order: 7, label: "7" }],
+    ["8", { order: 8, label: "8" }],
+    ["9", { order: 9, label: "9" }],
+    ["T", { order: 10, label: "T" }],
+    ["Q", { order: 12, label: "Q" }],
+    ["K", { order: 13, label: "K" }],
+    ["A", { order: 14, label: "A" }]
 ]);
 
 export class CardUtil {
@@ -81,13 +81,13 @@ export class CardUtil {
 
 export class HandUtil {
     private static readonly ALL_RANKS_MAP: Map<HandType, Rank> = new Map([
-        ["Five of a kind", {type: "Five of a kind", rank: 9}],
-        ["Four of a kind", {type: "Four of a kind", rank: 8}],
-        ["Full house", {type: "Full house", rank: 7}],
-        ["Three of a kind", {type: "Three of a kind", rank: 6}],
-        ["Two pair", {type: "Two pair", rank: 5}],
-        ["One pair", {type: "One pair", rank: 4}],
-        ["High card", {type: "High card", rank: 3}]
+        ["Five of a kind", { type: "Five of a kind", rank: 9 }],
+        ["Four of a kind", { type: "Four of a kind", rank: 8 }],
+        ["Full house", { type: "Full house", rank: 7 }],
+        ["Three of a kind", { type: "Three of a kind", rank: 6 }],
+        ["Two pair", { type: "Two pair", rank: 5 }],
+        ["One pair", { type: "One pair", rank: 4 }],
+        ["High card", { type: "High card", rank: 3 }]
     ]);
 
     public static process(cards: Card[]): Rank {
@@ -141,41 +141,39 @@ export class HandUtil {
                 filteredOccurrenceArr.push(cards.filter(card => card.label === cardLabel).length);
             }
         });
+        if (filteredOccurrenceArr.length === 0) {
+            filteredOccurrenceArr.push(0);
+        }
         let jOccurrence: number = cards.filter(card => card.label === "J").length;
         filteredOccurrenceArr.sort((a, b) => b - a);
-        if (jOccurrence === 0) {
-            return this.process(cards);
-        } else {
-            while (jOccurrence > 0) {
-                const indexToIncrement: number = filteredOccurrenceArr.findIndex(nbOccurrence => nbOccurrence < 5);
-                filteredOccurrenceArr[indexToIncrement] = ++filteredOccurrenceArr[indexToIncrement];
-                jOccurrence--;
+        while (jOccurrence > 0) {
+            const indexToIncrement: number = filteredOccurrenceArr.findIndex(nbOccurrence => nbOccurrence < 5);
+            filteredOccurrenceArr[indexToIncrement] = ++filteredOccurrenceArr[indexToIncrement];
+            jOccurrence--;
+        }
+        const occurrencePattern = filteredOccurrenceArr.join("");
+        switch (occurrencePattern) {
+            case "5": {
+                return this.getRankOrFuckOff("Five of a kind");
             }
-            const occurrencePattern = filteredOccurrenceArr.join("");
-            switch (occurrencePattern) {
-                case "5": {
-                    return this.getRankOrFuckOff("Five of a kind");
-                }
-                case "41": {
-                    return  this.getRankOrFuckOff("Four of a kind");
-                }
-                case "32": {
-                    return  this.getRankOrFuckOff("Full house");
-                }
-                case "311": {
-                    return  this.getRankOrFuckOff("Three of a kind");
-                }
-                case "221": {
-                    return  this.getRankOrFuckOff("Two pair");
-                }
-                case "2111": {
-                    return this.getRankOrFuckOff("One pair");
-                }
-                default: {
-                    return this.getRankOrFuckOff("High card");
-                }
+            case "41": {
+                return this.getRankOrFuckOff("Four of a kind");
             }
-
+            case "32": {
+                return this.getRankOrFuckOff("Full house");
+            }
+            case "311": {
+                return this.getRankOrFuckOff("Three of a kind");
+            }
+            case "221": {
+                return this.getRankOrFuckOff("Two pair");
+            }
+            case "2111": {
+                return this.getRankOrFuckOff("One pair");
+            }
+            default: {
+                return this.getRankOrFuckOff("High card");
+            }
         }
     }
 

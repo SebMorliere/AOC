@@ -38,3 +38,4 @@ new Solver(DAY, PART, testFile).solve(); // expecting 5905
 new Solver(DAY, PART, inputFile).solve();
 // TOO LOW 250545770
 // TOO LOW 250452116
+//         250577259
