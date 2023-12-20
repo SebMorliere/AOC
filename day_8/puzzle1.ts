@@ -1,4 +1,5 @@
 import { GenericSolver } from "../shared/generic-solver";
+import { Instruction, NetworkNode } from "./models";
 
 const DAY = 8;
 const PUZZLE = 1;
@@ -10,7 +11,7 @@ const inputFile = `./day_${DAY}/input${PUZZLE}.data`;
 
 class Solver extends GenericSolver {
     private instructions: Instruction | null = null;
-    private nodes: Node[] = [];
+    private nodes: NetworkNode[] = [];
 
     protected lineProcessor(line: string): void {
         if (this.instructions === null) {
@@ -21,7 +22,7 @@ class Solver extends GenericSolver {
             if (res !== null) {
                 const left = res[0];
                 const right = res[1];
-                this.nodes.push({ref: ref, left: left, right: right});
+                this.nodes.push({ ref: ref, left: left, right: right });
             }
         }
     }
@@ -45,33 +46,8 @@ class Solver extends GenericSolver {
             this.res = this.res + 1;
         }
     }
-
 }
 
 new Solver(DAY, PUZZLE, testFile1).solve(); // expecting 2
 new Solver(DAY, PUZZLE, testFile2).solve(); // expecting 6
 new Solver(DAY, PUZZLE, inputFile).solve(); //   16409 GOOD
-
-class Instruction {
-    private readonly instructions: ("L" | "R")[] = [];
-
-    constructor(instructions: string) {
-        this.instructions.push(...instructions.split("").map(s => s === "R" ? "R" : "L"));
-    }
-
-    next(): "L" | "R" {
-        const shift = this.instructions.shift();
-        if (shift) {
-            this.instructions.push(shift);
-            return shift;
-        } else {
-            throw new Error("Invalid instructions data");
-        }
-    }
-}
-
-interface Node {
-    ref: string;
-    left: string;
-    right: string;
-}
