@@ -2,7 +2,7 @@ import { GenericSolver } from "../shared/generic-solver";
 import { extrapolateLast } from "./models";
 
 const DAY = 9;
-const PUZZLE = 1;
+const PUZZLE = 2;
 const TEST = 1;
 const DATA = 1;
 const testFile = `./day_${DAY}/test${TEST}.data`;
@@ -12,7 +12,7 @@ class Solver extends GenericSolver {
     private resBuffer = 0;
 
     protected lineProcessor(line: string): void {
-        const history: number[] = line.split(" ").map(s => +s);
+        const history: number[] = line.split(" ").map(s => +s).reverse();
         this.resBuffer += extrapolateLast(history);
 
     }
@@ -22,5 +22,5 @@ class Solver extends GenericSolver {
     }
 }
 
-new Solver(DAY, PUZZLE, testFile).solve(); // expecting 114
-new Solver(DAY, PUZZLE, inputFile).solve(); // 1834108701
+new Solver(DAY, PUZZLE, testFile).solve(); // expecting 2
+new Solver(DAY, PUZZLE, inputFile).solve(); //

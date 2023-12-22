@@ -18,7 +18,8 @@
     "day_07-2": "ts-node ./day_7/puzzle2.ts",
     "day_08-1": "ts-node ./day_8/puzzle1.ts",
     "day_08-2": "ts-node ./day_8/puzzle2.ts",
-    "day_09-1": "ts-node ./day_9/puzzle1.ts"
+    "day_09-1": "ts-node ./day_9/puzzle1.ts",
+    "day_09-2": "ts-node ./day_9/puzzle2.ts"
   },
   "volta": {
     "node": "16.20.2"

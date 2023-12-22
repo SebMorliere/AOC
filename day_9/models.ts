@@ -1,4 +1,4 @@
-export function extrapolate(values: number[]): number {
+export function extrapolateLast(values: number[]): number {
     const length = values.length;
 
     if (length < 2) {
@@ -9,7 +9,7 @@ export function extrapolate(values: number[]): number {
             const diff: number = values[length - 1] - values[length - 2];
             return values[length - 1] + diff;
         } else {
-            const extrapole: number = extrapolate(derivative);
+            const extrapole: number = extrapolateLast(derivative);
             return values[length - 1] + extrapole;
         }
     }
