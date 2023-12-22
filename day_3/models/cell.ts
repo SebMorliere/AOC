@@ -1,15 +1,12 @@
-import { Coords } from "./coords";
-import { BgColor, CharColor, FgColor } from "../../shared/colored-logger";
+import { CharColor, FgColor } from "../../shared/colored-logger";
 
 export class Cell {
-    readonly coords: Coords;
     readonly type: CellType;
     readonly value: string;
     charColor: CharColor = {};
     adjacentPartNumberList: number[] = [];
 
-    constructor(x: number, y: number, value: string) {
-        this.coords = new Coords(x, y);
+    constructor(value: string) {
         this.value = value;
         this.type = getCellType(value);
         if (this.type === CellType.EMPTY) {

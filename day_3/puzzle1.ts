@@ -1,8 +1,9 @@
-import { Matrix } from "./models/matrix";
 import { Cell, CellType } from "./models/cell";
 import { GenericSolver } from "../shared/generic-solver";
 import { ColoredLogger, FgColor, tint } from "../shared/colored-logger";
 import { sum } from "../shared/utils";
+import { Matrix, MatrixCell } from "../shared/matrix";
+import { Coords } from "../shared/coords";
 
 const DAY = 3;
 const PART = 1;
@@ -16,7 +17,7 @@ class Solver extends GenericSolver {
     protected lineProcessor(line: string): void {
         line.split("")
             .forEach((char, index) => {
-                const newCell: Cell = new Cell(index, this.matrix.getHeight(), char);
+                const newCell: MatrixCell<Cell> = new MatrixCell<Cell>(new Coords(index, this.matrix.getHeight()), new Cell(char));
                 this.matrix.append(newCell);
             });
         this.matrix.newLine();
@@ -25,22 +26,22 @@ class Solver extends GenericSolver {
     protected resultProcessor(): void {
         const listOfValidPartNumber: number[] = [];
         for (let y = 0; y < this.matrix.getHeight(); y++) {
-            let cellBuffer: Cell[] = [];
+            let matrixCellBuffer: MatrixCell<Cell>[] = [];
             for (let x = 0; x < this.matrix.getWidth(); x++) {
-                const cell = this.matrix.getCell(x, y);
-                if (cell.type === CellType.NUMBER) {
-                    cellBuffer.push(cell);
+                const mCell = this.matrix.getCell(x, y);
+                if (mCell.content.type === CellType.NUMBER) {
+                    matrixCellBuffer.push(mCell);
                 }
-                if (cellBuffer.length > 0 && (cell.type !== CellType.NUMBER || x + 1 === this.matrix.getWidth())) {
-                    const isValidPartNumber = cellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords))
-                        .some(cell => cell.type === CellType.SYMBOL || cell.type === CellType.GEAR);
+                if (matrixCellBuffer.length > 0 && (mCell.content.type !== CellType.NUMBER || x + 1 === this.matrix.getWidth())) {
+                    const isValidPartNumber = matrixCellBuffer.flatMap(cell => this.matrix.getSurroundingCells(cell.coords))
+                        .some(mCell => mCell.content.type === CellType.SYMBOL || mCell.content.type === CellType.GEAR);
                     if (isValidPartNumber) {
-                        cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.GREEN });
-                        listOfValidPartNumber.push(+cellBuffer.map(cell => cell.value).join(""));
+                        matrixCellBuffer.forEach(mCell => mCell.content.charColor = { fgColor: FgColor.GREEN });
+                        listOfValidPartNumber.push(+matrixCellBuffer.map(mCell => mCell.content.value).join(""));
                     } else {
-                        cellBuffer.forEach(cell => cell.charColor = { fgColor: FgColor.RED });
+                        matrixCellBuffer.forEach(mCell => mCell.content.charColor = { fgColor: FgColor.RED });
                     }
-                    cellBuffer = [];
+                    matrixCellBuffer = [];
                 }
             }
         }
@@ -50,7 +51,7 @@ class Solver extends GenericSolver {
 
     private displayMatrix() {
         this.matrix.cells
-            .map(cells => cells.map(cell => tint(cell.value, cell.charColor)).join(""))
+            .map(mCells => mCells.map(mCell => tint(mCell.content.value, mCell.content.charColor)).join(""))
             .forEach(line => this.coloredLogger.logTinted(line));
     }
 }
