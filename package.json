@@ -17,7 +17,8 @@
     "day_07-1": "ts-node ./day_7/puzzle1.ts",
     "day_07-2": "ts-node ./day_7/puzzle2.ts",
     "day_08-1": "ts-node ./day_8/puzzle1.ts",
-    "day_08-2": "ts-node ./day_8/puzzle2.ts"
+    "day_08-2": "ts-node ./day_8/puzzle2.ts",
+    "day_09-1": "ts-node ./day_9/puzzle1.ts"
   },
   "volta": {
     "node": "16.20.2"
@@ -26,6 +27,7 @@
     "rxjs": "~7.8.1"
   },
   "devDependencies": {
+    "@types/node": "~20.10.5",
     "@typescript-eslint/eslint-plugin": "~6.13.1",
     "@typescript-eslint/parser": "~6.13.1",
     "eslint": "~8.55.0",
