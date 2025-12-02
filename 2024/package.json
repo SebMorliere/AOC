@@ -1,0 +1,59 @@
+{
+  "name": "aoc2024",
+  "version": "1.0.0",
+  "description": "Advent Of Code 2024",
+  "main": "index.js",
+  "scripts": {
+    "old_exemple": "ts-node ./old_exemple/puzzle1.ts",
+    "old_exemple_2": "ts-node ./old_exemple/puzzle2.ts",
+    "d01-1": "ts-node d01/solver.p1.ts",
+    "d01-2": "ts-node d01/solver.p2.ts",
+    "d02-1": "ts-node d02/solver.p1.ts",
+    "d02-2": "ts-node d02/solver.p2.ts",
+    "d03-1": "ts-node d03/solver.p1.ts",
+    "d03-2": "ts-node d03/solver.p2.ts",
+    "d04-1": "ts-node d04/solver.p1.ts",
+    "d04-2": "ts-node d04/solver.p2.ts",
+    "d05-1": "ts-node d05/solver.p1.ts",
+    "d05-2": "ts-node d05/solver.p2.ts",
+    "d06-1": "ts-node d06/solver.p1.ts",
+    "d06-2": "ts-node d06/solver.p2.ts",
+    "d09-1": "ts-node d09/solver.p1.ts",
+    "d09-2": "ts-node d09/solver.p2.ts",
+    "d11-1": "ts-node d11/solver.p1.ts",
+    "d11-2": "ts-node d11/solver.p2.ts",
+    "d13-1": "ts-node d13/solver.p1.ts",
+    "d13-2": "ts-node d13/solver.p2.ts",
+    "d17-1": "ts-node d17/solver.p1.ts",
+    "d17-2": "ts-node d17/solver.p2.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SebMorliere/AOC2024.git"
+  },
+  "keywords": [
+    "advent",
+    "adventofcode",
+    "2024",
+    "solution",
+    "typescript"
+  ],
+  "author": "Sébastien Morliere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SebMorliere/AOC2024/issues"
+  },
+  "homepage": "https://github.com/SebMorliere/AOC2024#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.16.0",
+    "rxjs": "^7.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "volta": {
+    "node": "22.11.0"
+  }
+}

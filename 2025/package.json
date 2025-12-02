@@ -1,0 +1,38 @@
+{
+  "name": "aoc2025",
+  "version": "1.0.0",
+  "description": "Advent Of Code 2025",
+  "main": "index.js",
+  "scripts": {
+    "d01-1": "ts-node d01/solver.p1.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SebMorliere/AOC2024.git"
+  },
+  "keywords": [
+    "advent",
+    "adventofcode",
+    "2024",
+    "solution",
+    "typescript"
+  ],
+  "author": "Sébastien Morliere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SebMorliere/AOC2024/issues"
+  },
+  "homepage": "https://github.com/SebMorliere/AOC2024#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.16.0",
+    "rxjs": "^7.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "volta": {
+    "node": "22.11.0"
+  }
+}
