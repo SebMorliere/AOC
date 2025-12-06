@@ -1,7 +1,7 @@
 import { initPuzzle } from '../utils/utils';
 
-const readerInput = initPuzzle(1, 1, './d01/input1.data');
-const readerExample1 = initPuzzle(1, 1, './d01/example1.data');
+const readerInput = initPuzzle(1, 2, 'input1.data');
+const readerExample1 = initPuzzle(1, 2, 'example1.data');
 
 const reader = readerInput;
 

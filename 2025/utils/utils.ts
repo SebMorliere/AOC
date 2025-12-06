@@ -2,9 +2,10 @@ import fs from 'fs';
 import readline from 'readline';
 import { Observable, Subscriber } from 'rxjs';
 
-export function initPuzzle(day: number, part: number, inputFile: string): Observable<string> {
-    console.log(`start solving Day ${day} - Part ${part} with input file ${inputFile}`);
-    return fileReader(inputFile);
+export function initPuzzle(day: number, part: number, fileName: string): Observable<string> {
+    const filePAth = `./d${(day+'').padStart(2, '0')}/${fileName}`;
+    console.log(`start solving Day ${day} - Part ${part} with input file ${filePAth}`);
+    return fileReader(`./d${(day+'').padStart(2, '0')}/${fileName}`);
 }
 
 
