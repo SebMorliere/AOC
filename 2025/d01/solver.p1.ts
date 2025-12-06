@@ -1,9 +1,9 @@
-import { initPuzzle } from '../utils/utils';
+import { Puzzle } from '../utils/utils';
 
-const readerInput = initPuzzle(1, 1, 'input1.data');
-const readerExample = initPuzzle(1, 1, 'example1.data');
+const readerInput = new Puzzle(1, 1, 'input1.data');
+const readerExample = new Puzzle(1, 1, 'example1.data');
 
-const reader = readerInput;
+const reader = readerInput.init();
 
 let res = 0;
 let actualPosition = 50;

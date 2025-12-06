@@ -2,25 +2,30 @@ import fs from 'fs';
 import readline from 'readline';
 import { Observable, Subscriber } from 'rxjs';
 
-export function initPuzzle(day: number, part: number, fileName: string): Observable<string> {
-    const filePAth = `./d${(day+'').padStart(2, '0')}/${fileName}`;
-    console.log(`start solving Day ${day} - Part ${part} with input file ${filePAth}`);
-    return fileReader(`./d${(day+'').padStart(2, '0')}/${fileName}`);
-}
+export class Puzzle {
 
+    constructor(private day: number, private part: number, private fileName: string) {
+    }
 
-export function fileReader(fileName: string): Observable<string> {
-    const stream: fs.ReadStream = fs.createReadStream(fileName, { encoding: 'utf-8', autoClose: true });
-    const lineReaderEmitter: readline.Interface = readline.createInterface({
-        input: stream,
-        crlfDelay: Infinity
-    });
+    init(): Observable<string> {
+        const filePAth = `./d${(this.day+'').padStart(2, '0')}/${this.fileName}`;
+        console.log(`start solving Day ${this.day} - Part ${this.part} with input file ${filePAth}`);
+        return this.fileReader(`./d${(this.day+'').padStart(2, '0')}/${this.fileName}`);
+    }
 
-    return new Observable((observer: Subscriber<string>) => {
-        lineReaderEmitter.on('line', line => observer.next(line));
-        lineReaderEmitter.on('close', () => observer.complete());
-        lineReaderEmitter.on('error', err => observer.error(err));
-    });
+    private fileReader(fileName: string): Observable<string> {
+        const stream: fs.ReadStream = fs.createReadStream(fileName, { encoding: 'utf-8', autoClose: true });
+        const lineReaderEmitter: readline.Interface = readline.createInterface({
+            input: stream,
+            crlfDelay: Infinity
+        });
+
+        return new Observable((observer: Subscriber<string>) => {
+            lineReaderEmitter.on('line', line => observer.next(line));
+            lineReaderEmitter.on('close', () => observer.complete());
+            lineReaderEmitter.on('error', err => observer.error(err));
+        });
+    }
 }
 
 export function sum(previousValue: number, currentValue: number): number {

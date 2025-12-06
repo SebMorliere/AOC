@@ -1,7 +1,7 @@
 import { Puzzle } from '../utils/utils';
 
-const readerInput = new Puzzle(2, 1, 'input1.data');
-const readerExample = new Puzzle(2, 1, 'example1.data');
+const readerInput = new Puzzle(2, 2, 'input1.data');
+const readerExample = new Puzzle(2, 2, 'example1.data');
 
 const reader = readerInput.init();
 
@@ -44,10 +44,18 @@ function iterateRange(rd: Range): number {
 
 function isInvalid(id: number): boolean {
     const idStr: string = id.toString(10);
-    const shouldCheck = idStr.length % 2 === 0;
-    const firstHalf: string = idStr.substring(0, id.toString(10).length / 2);
-    const secondHalf: string = idStr.substring(id.toString(10).length / 2, id.toString(10).length);
-    return shouldCheck && (firstHalf === secondHalf);
+    for (let i = 1; i <= idStr.length / 2; i++) {
+        if (idStr.length % i > 0) {
+            continue;
+        }
+        const toTest = idStr.substring(0, i);
+        const partialRes = idStr.split(toTest).join('').length === 0;
+        if (partialRes) {
+            // console.log(`got ${idStr} INVALID with ${toTest}`);
+            return true;
+        }
+    }
+    return false;
 }
 
 class Range {
