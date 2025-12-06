@@ -4,7 +4,10 @@
   "description": "Advent Of Code 2025",
   "main": "index.js",
   "scripts": {
-    "d01-1": "ts-node d01/solver.p1.ts"
+    "d01-1": "ts-node d01/solver.p1.ts",
+    "d01-2": "ts-node d01/solver.p2.ts",
+    "d02-1": "ts-node d02/solver.p1.ts",
+    "d02-2": "ts-node d02/solver.p2.ts"
   },
   "repository": {
     "type": "git",
