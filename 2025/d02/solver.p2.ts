@@ -1,8 +1,9 @@
-import { Puzzle } from '../utils/utils';
+import { Logger, Puzzle } from '../utils/utils';
+
+const logger = new Logger('debug');
 
 const readerInput = new Puzzle(2, 2, 'input1.data');
 const readerExample = new Puzzle(2, 2, 'example1.data');
-
 const reader = readerInput.init();
 
 const rangeDescriptors: Range[] = [];
@@ -14,26 +15,18 @@ reader.subscribe({
             rangeDescriptors.push(new Range(min, max));
         });
     },
-    error: err => {
-        console.log('reading error', err);
-    },
     complete: () => {
-        console.log('reading finished');
-        solverP1();
+        let res = 0;
+        rangeDescriptors.forEach(rd => {
+            res += iterateRange(rd);
+        });
+        logger.info('solution', res);
     },
 });
 
-function solverP1() {
-    let res = 0;
-    rangeDescriptors.forEach(rd => {
-        res += iterateRange(rd)
-    })
-    console.log('solution', res);
-}
-
 function iterateRange(rd: Range): number {
     let res = 0;
-    while(rd.hasNext()) {
+    while (rd.hasNext()) {
         const next = rd.next();
         if (next && isInvalid(next)) {
             res += next;
@@ -51,7 +44,7 @@ function isInvalid(id: number): boolean {
         const toTest = idStr.substring(0, i);
         const partialRes = idStr.split(toTest).join('').length === 0;
         if (partialRes) {
-            // console.log(`got ${idStr} INVALID with ${toTest}`);
+            logger.debug(`got ${idStr} INVALID with ${toTest}`);
             return true;
         }
     }
@@ -61,7 +54,7 @@ function isInvalid(id: number): boolean {
 class Range {
     min: number;
     max: number;
-    private cursor:number;
+    private cursor: number;
 
     constructor(min: number, max: number) {
         this.min = min;
